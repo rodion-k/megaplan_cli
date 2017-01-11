@@ -1,0 +1,20 @@
+{
+    "name": "megaplan-cli/megaplan-cli",
+    "description": "CLI interface for megaplan.ru",
+    "require": {
+        "megaplan/simple_client": "dev-master",
+        "symfony/console": "^3.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rodion",
+            "email": "ra1991k@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "MegaplanCLI\\": "src/"
+        }
+    }
+}
