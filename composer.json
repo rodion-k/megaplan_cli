@@ -16,5 +16,6 @@
         "psr-4": {
             "MegaplanCLI\\": "src/"
         }
-    }
+    },
+    "bin": ["bin/megaplan"]
 }
