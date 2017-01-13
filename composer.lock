@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e3cd4a8fb4d50efb4269fb88037fd34f",
-    "content-hash": "b8ca17c64fe499b5fc6efdfb59033fdd",
+    "hash": "f3509af8b61116999eab2610683cfd09",
+    "content-hash": "1e19b7870f6200cc9d8a4118068e8e39",
     "packages": [
         {
             "name": "megaplan/simple_client",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/megaplan/simple_client.git",
-                "reference": "1197f608885ee26d7fa65d59e408a9ac22d6d4af"
+                "url": "https://github.com/rodion-k/simple_client.git",
+                "reference": "f4c5b4d660885cfe3bc6f5d6840beca44f38c33b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/megaplan/simple_client/zipball/1197f608885ee26d7fa65d59e408a9ac22d6d4af",
-                "reference": "1197f608885ee26d7fa65d59e408a9ac22d6d4af",
+                "url": "https://api.github.com/repos/rodion-k/simple_client/zipball/f4c5b4d660885cfe3bc6f5d6840beca44f38c33b",
+                "reference": "f4c5b4d660885cfe3bc6f5d6840beca44f38c33b",
                 "shasum": ""
             },
             "require-dev": {
@@ -30,7 +30,11 @@
                     "Megaplan\\SimpleClient\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Megaplan\\SimpleClient\\Tests\\": "tests/"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -41,11 +45,14 @@
                 }
             ],
             "description": "Simple API client for Megaplan",
-            "time": "2016-10-19 13:02:14"
+            "support": {
+                "source": "https://github.com/rodion-k/simple_client/tree/master"
+            },
+            "time": "2017-01-12 17:26:59"
         },
         {
             "name": "psr/log",
-            "version": "1.0.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
@@ -92,16 +99,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v3.2.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "d12aa9ca20f4db83ec58410978dab6afcb9d6aaa"
+                "reference": "08efa49aa07dde0747198c6075a1061c750e9884"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/d12aa9ca20f4db83ec58410978dab6afcb9d6aaa",
-                "reference": "d12aa9ca20f4db83ec58410978dab6afcb9d6aaa",
+                "url": "https://api.github.com/repos/symfony/console/zipball/08efa49aa07dde0747198c6075a1061c750e9884",
+                "reference": "08efa49aa07dde0747198c6075a1061c750e9884",
                 "shasum": ""
             },
             "require": {
@@ -111,8 +118,10 @@
             },
             "require-dev": {
                 "psr/log": "~1.0",
+                "symfony/dependency-injection": "~2.8|~3.0",
                 "symfony/event-dispatcher": "~2.8|~3.0",
                 "symfony/filesystem": "~2.8|~3.0",
+                "symfony/http-kernel": "~2.8|~3.0",
                 "symfony/process": "~2.8|~3.0"
             },
             "suggest": {
@@ -124,7 +133,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.2-dev"
+                    "dev-master": "3.3-dev"
                 }
             },
             "autoload": {
@@ -151,20 +160,20 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2016-12-11 14:34:22"
+            "time": "2017-01-11 12:05:48"
         },
         {
             "name": "symfony/debug",
-            "version": "v3.2.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "9f923e68d524a3095c5a2ae5fc7220c7cbc12231"
+                "reference": "7a0d1faf0e3e9ef6c3eea08e48a461010ea211db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/9f923e68d524a3095c5a2ae5fc7220c7cbc12231",
-                "reference": "9f923e68d524a3095c5a2ae5fc7220c7cbc12231",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/7a0d1faf0e3e9ef6c3eea08e48a461010ea211db",
+                "reference": "7a0d1faf0e3e9ef6c3eea08e48a461010ea211db",
                 "shasum": ""
             },
             "require": {
@@ -181,7 +190,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.2-dev"
+                    "dev-master": "3.3-dev"
                 }
             },
             "autoload": {
@@ -208,11 +217,11 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-16 22:18:16"
+            "time": "2017-01-02 20:33:09"
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.3.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
@@ -272,7 +281,7 @@
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
         "megaplan/simple_client": 20
     },

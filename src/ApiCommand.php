@@ -37,8 +37,19 @@ class ApiCommand extends Command
         
         $output->write(print_r($response, 1));
         
-        if ($client->getError()) {
-            throw new ErrorResponseException("{$client->getInfo('http_code')}: {$client->getError()}");
+        $error = $client->getError()
+            ? "{$client->getInfo('http_code')}: {$client->getError()}"
+            : ($response->error ?? ($response->status->code === 'error'
+                ? $response->status->message
+                : null
+            ));
+        
+        if (null !== $error) {
+            /* @var $formatter \Symfony\Component\Console\Helper\FormatterHelper */
+            $formatter = $this->getHelper('formatter');
+            $output->writeln($formatter->formatBlock($error, 'error'));
+            
+            return 1;
         }
     }
 }

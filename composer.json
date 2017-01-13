@@ -18,5 +18,11 @@
             "MegaplanCLI\\": "src/"
         }
     },
-    "bin": ["bin/megaplan"]
+    "bin": ["bin/megaplan"],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/rodion-k/simple_client"
+        }
+    ]
 }
