@@ -19,8 +19,9 @@ class ApiCommand extends Command
             ->addArgument('username', InputArgument::REQUIRED)
             ->addArgument('password', InputArgument::REQUIRED)
             ->addArgument('uri', InputArgument::REQUIRED)
-            ->addOption('method', 'm', InputOption::VALUE_OPTIONAL, 'get or post', 'get')
-            ->addOption('params', 'p', InputOption::VALUE_OPTIONAL);
+            ->addOption('method', 'm', InputOption::VALUE_REQUIRED, 'get or post', 'get')
+            ->addOption('params', 'p', InputOption::VALUE_REQUIRED)
+            ->addOption('jmespath', 'j', InputOption::VALUE_REQUIRED);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -34,8 +35,6 @@ class ApiCommand extends Command
         $response = $client
             ->auth($input->getArgument('username'), $input->getArgument('password'))
             ->{$input->getOption('method')}("/{$input->getArgument('uri')}.api", $params);
-        
-        $output->write(print_r($response, 1));
         
         $error = $client->getError()
             ? "{$client->getInfo('http_code')}: {$client->getError()}"
@@ -51,5 +50,10 @@ class ApiCommand extends Command
             
             return 1;
         }
+        
+        $result = $input->getOption('jmespath')
+            ? \JmesPath\search($input->getOption('jmespath'), $response->data)
+            : $response->data;
+        $output->write(json_encode($result, JSON_PRETTY_PRINT));
     }
 }

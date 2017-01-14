@@ -3,7 +3,8 @@
     "description": "CLI interface for megaplan.ru",
     "require": {
         "megaplan/simple_client": "dev-master",
-        "symfony/console": "^3.2"
+        "symfony/console": "^3.2",
+        "mtdowling/jmespath.php": "2.*"
     },
     "license": "MIT",
     "minimum-stability": "dev",
