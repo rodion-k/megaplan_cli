@@ -21,7 +21,8 @@ class ApiCommand extends Command
             ->addArgument('uri', InputArgument::REQUIRED)
             ->addOption('method', 'm', InputOption::VALUE_REQUIRED, 'get or post', 'get')
             ->addOption('params', 'p', InputOption::VALUE_REQUIRED)
-            ->addOption('jmespath', 'j', InputOption::VALUE_REQUIRED);
+            ->addOption('jmespath', 'j', InputOption::VALUE_REQUIRED)
+            ->addOption('app', 'a', InputOption::VALUE_NONE, 'if username and password are application credentials');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -32,18 +33,12 @@ class ApiCommand extends Command
         }
         
         $client = new Client($input->getArgument('host'));
+        $authMethod = $input->getOption('app') ? 'authApplication' : 'auth';
         $response = $client
-            ->auth($input->getArgument('username'), $input->getArgument('password'))
+            ->{$authMethod}($input->getArgument('username'), $input->getArgument('password'))
             ->{$input->getOption('method')}("/{$input->getArgument('uri')}.api", $params);
         
-        $error = $client->getError()
-            ? "{$client->getInfo('http_code')}: {$client->getError()}"
-            : ($response->error ?? ($response->status->code === 'error'
-                ? $response->status->message
-                : null
-            ));
-        
-        if (null !== $error) {
+        if (null !== ($error = $this->getError($client, $response))) {
             /* @var $formatter \Symfony\Component\Console\Helper\FormatterHelper */
             $formatter = $this->getHelper('formatter');
             $output->writeln($formatter->formatBlock($error, 'error'));
@@ -51,9 +46,24 @@ class ApiCommand extends Command
             return 1;
         }
         
+        $output->write($this->prepareResult($input, $response));
+    }
+    
+    protected function getError(Client $client, \stdClass $response)
+    {
+        return $client->getError()
+            ? "{$client->getInfo('http_code')}: {$client->getError()}"
+            : ($response->error ?? ($response->status->code === 'error'
+                ? $response->status->message
+                : null
+            ));
+    }
+    
+    protected function prepareResult(InputInterface $input, \stdClass $response): string
+    {
         $result = $input->getOption('jmespath')
             ? \JmesPath\search($input->getOption('jmespath'), $response->data)
             : $response->data;
-        $output->write(json_encode($result, JSON_PRETTY_PRINT));
+        return json_encode($result, JSON_PRETTY_PRINT);
     }
 }
