@@ -62,8 +62,8 @@ class ApiCommand extends Command
     protected function prepareResult(InputInterface $input, \stdClass $response): string
     {
         $result = $input->getOption('jmespath')
-            ? \JmesPath\search($input->getOption('jmespath'), $response->data)
-            : $response->data;
+            ? \JmesPath\search($input->getOption('jmespath'), $response->data ?? $response)
+            : $response->data ?? $response;
         return json_encode($result, JSON_PRETTY_PRINT);
     }
 }
