@@ -22,7 +22,8 @@ class ApiCommand extends Command
             ->addOption('method', 'm', InputOption::VALUE_REQUIRED, 'get or post', 'get')
             ->addOption('params', 'p', InputOption::VALUE_REQUIRED)
             ->addOption('jmespath', 'j', InputOption::VALUE_REQUIRED)
-            ->addOption('app', 'a', InputOption::VALUE_NONE, 'if username and password are application credentials');
+            ->addOption('app', 'a', InputOption::VALUE_NONE, 'if username and password are application credentials')
+            ->addOption('unquoted', 'u', InputOption::VALUE_NONE, 'specify that any result that is a string will be printed without quotes');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -61,9 +62,20 @@ class ApiCommand extends Command
     
     protected function prepareResult(InputInterface $input, \stdClass $response): string
     {
-        $result = $input->getOption('jmespath')
-            ? \JmesPath\search($input->getOption('jmespath'), $response->data ?? $response)
-            : $response->data ?? $response;
-        return json_encode($result, JSON_PRETTY_PRINT);
+        $formatters = [
+            'extract_by_jmespath' => function($response) use ($input) {
+                return $input->getOption('jmespath')
+                    ? \JmesPath\search($input->getOption('jmespath'), $response->data ?? $response)
+                    : $response->data ?? $response;
+            },
+            'encode' => function($result) { return json_encode($result, JSON_PRETTY_PRINT); },
+            'unquote' => function($result) use ($input) {
+                return $input->getOption('unquoted') ? trim($result, '"'): $result;
+            }
+        ];
+        
+        return array_reduce($formatters, function($name, callable $formatter) {
+            return $formatter($name);
+        }, $response);
     }
 }
